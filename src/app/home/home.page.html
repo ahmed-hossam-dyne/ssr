@@ -1,20 +1,62 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
+    <ion-button onKeyDown="goToNewMenu()" (click)="goToNewMenu()">
+      OTHER MENU</ion-button
+    >
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content [fullscreen]="true" class="ion-padding">
+  <ng-container *ngIf="isLoading;else loadingDone">
+    <p style="font-size: 40px">
+      🤌🏾🤌🏾🤌🏾🤌🏾🤌🏾🤌🏾🤌🏾🤌🏾🤌🏾🤌🏾🤌🏾🤌🏾🤌🏾🤌🏾🤌🏾🤌🏾🤌🏾🤌🏾🤌🏾🤌🏾🤌🏾🤌🏾🤌🏾🤌🏾🤌🏾🤌🏾🤌🏾🤌🏾🤌🏾🤌🏾🤌🏾🤌🏾🤌🏾🤌🏾🤌🏾🤌🏾🤌🏾🤌🏾🤌🏾🤌🏾🤌🏾🤌🏾🤌🏾🤌🏾🤌🏾🤌🏾🤌🏾🤌🏾🤌🏾🤌🏾🤌🏾🤌🏾🤌🏾🤌🏾🤌🏾🤌🏾
+    </p>
+  </ng-container>
+  <ng-template #loadingDone>
+    <ng-container *ngIf="menus?.length;else emptyState">
+      <div
+        *ngFor="let menu of menus"
+        class="menu-wrapper border-20 ion-padding ion-margin-vertical"
+      >
+        <h1>{{menu.name}}</h1>
+        <div
+          *ngFor="let section of menu?.sections"
+          class="section-wrapper border-20 ion-padding ion-margin-vertical"
+        >
+          <h2>{{section.name}}</h2>
+          <div
+            *ngFor="let category of section?.categories"
+            class="category-wrapper border-20 ion-padding ion-margin-vertical"
+          >
+            <h3>{{category.name}}</h3>
+            <ion-card
+              *ngFor="let item of category?.items"
+              class="ion-margin-vertical"
+            >
+              <img
+                [alt]="item.name"
+                [src]="item?.thumbnail?.length ? item?.thumbnail : fallbackImg  "
+              />
+              <ion-card-header>
+                <ion-card-title>{{item.name}}</ion-card-title>
+              </ion-card-header>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+              <ion-card-content> {{item.desc}} </ion-card-content>
+            </ion-card>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-template #emptyState>
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>Empty State</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <p>There are no menus to display.</p>
+        </ion-card-content>
+      </ion-card>
+    </ng-template>
+  </ng-template>
 </ion-content>
